@@ -18,13 +18,6 @@
   status = 200
   force = true
 
-# SPA fallback for frontend routing
-[[redirects]]
-  from = "/*"
-  to = "/index.html"
-  status = 200
-  conditions = {Role = ["!api"]}
-
 # Security headers
 [[headers]]
   for = "/*"
