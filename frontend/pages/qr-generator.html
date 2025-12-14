@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QR Code Generator - Converter Tools</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        primary: { 500: '#3b82f6', 600: '#2563eb', 700: '#1d4ed8' },
+                        dark: { 800: '#1e293b', 850: '#1a2332', 900: '#0f172a', 950: '#020617' }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body class="bg-gradient-to-br from-dark-950 via-dark-900 to-dark-850 text-gray-100 font-['Inter']">
+
+    <nav class="sticky top-0 z-50 backdrop-blur-lg bg-dark-900/70 border-b border-gray-800">
+        <div class="container mx-auto px-4 py-4">
+            <div class="flex justify-between items-center">
+                <a href="../index.html" class="flex items-center gap-3">
+                    <div
+                        class="w-10 h-10 bg-gradient-to-br from-primary-500 to-primary-700 rounded-lg flex items-center justify-center">
+                        <i class="fas fa-exchange-alt text-white text-xl"></i>
+                    </div>
+                    <h1
+                        class="text-2xl font-bold bg-gradient-to-r from-primary-400 to-primary-600 bg-clip-text text-transparent">
+                        Converter Tools
+                    </h1>
+                </a>
+                <a href="../index.html" class="text-gray-400 hover:text-primary-400 transition-colors">
+                    <i class="fas fa-arrow-left mr-2"></i>Back to Home
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mx-auto px-4 py-12">
+        <div class="max-w-4xl mx-auto">
+
+            <div class="mb-8">
+                <div class="flex items-center gap-3 mb-3">
+                    <div
+                        class="w-12 h-12 bg-gradient-to-br from-yellow-500 to-amber-500 rounded-xl flex items-center justify-center">
+                        <i class="fas fa-qrcode text-white text-xl"></i>
+                    </div>
+                    <div>
+                        <h2 class="text-3xl font-bold">QR Code Generator</h2>
+                        <p class="text-gray-400">Create QR codes from text or URLs</p>
+                    </div>
+                </div>
+            </div>
+
+            <div id="messageContainer"></div>
+
+            <div class="bg-dark-850 border border-gray-800 rounded-2xl p-8">
+
+                <div class="mb-6">
+                    <label class="block text-sm font-semibold mb-2">
+                        <i class="fas fa-link mr-2 text-primary-500"></i>
+                        Enter URL or Text
+                    </label>
+                    <input type="text" id="dataInput"
+                        class="w-full bg-dark-900 border border-gray-700 rounded-lg p-4 text-gray-100 focus:border-primary-500 focus:outline-none"
+                        placeholder="https://example.com or any text" value="https://example.com">
+                </div>
+
+                <div class="grid md:grid-cols-2 gap-4 mb-6">
+                    <div>
+                        <label class="block text-sm font-semibold mb-2">
+                            <i class="fas fa-expand mr-2 text-primary-500"></i>
+                            QR Code Size
+                        </label>
+                        <input type="range" id="sizeInput" min="5" max="20" value="10" class="w-full">
+                        <p class="text-sm text-gray-400 mt-1">Size: <span id="sizeValue">10</span></p>
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-semibold mb-2">
+                            <i class="fas fa-border-style mr-2 text-primary-500"></i>
+                            Border Width
+                        </label>
+                        <input type="range" id="borderInput" min="4" max="10" value="4" class="w-full">
+                        <p class="text-sm text-gray-400 mt-1">Border: <span id="borderValue">4</span></p>
+                    </div>
+                </div>
+
+                <button onclick="generateQR()"
+                    class="w-full py-4 bg-gradient-to-r from-primary-600 to-primary-700 hover:from-primary-500 hover:to-primary-600 rounded-lg font-semibold text-white shadow-lg shadow-primary-500/30 transition-all transform hover:scale-105">
+                    <i class="fas fa-qrcode mr-2"></i>Generate QR Code
+                </button>
+
+                <div id="loadingIndicator" class="hidden mt-6 text-center">
+                    <div class="spinner mx-auto"></div>
+                    <p class="text-gray-400 mt-3">Generating...</p>
+                </div>
+
+                <div id="results" class="hidden mt-8">
+                    <h3 class="text-xl font-semibold mb-4">
+                        <i class="fas fa-check-circle mr-2 text-green-500"></i>
+                        Your QR Code
+                    </h3>
+
+                    <div class="bg-white rounded-lg p-8 flex justify-center items-center">
+                        <img id="qrImage" src="" alt="QR Code" class="max-w-full">
+                    </div>
+
+                    <div class="mt-4 flex gap-3">
+                        <button onclick="downloadQR()"
+                            class="flex-1 px-6 py-3 bg-primary-600 hover:bg-primary-500 rounded-lg transition-colors">
+                            <i class="fas fa-download mr-2"></i>Download PNG
+                        </button>
+                        <button onclick="copyQRImage()"
+                            class="flex-1 px-6 py-3 bg-dark-900 hover:bg-dark-800 border border-gray-700 rounded-lg transition-colors">
+                            <i class="fas fa-copy mr-2"></i>Copy Image
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="mt-8 p-6 bg-dark-850 border border-gray-800 rounded-2xl">
+                <h3 class="text-lg font-semibold mb-3">
+                    <i class="fas fa-lightbulb mr-2 text-yellow-500"></i>
+                    Use Cases
+                </h3>
+                <ul class="space-y-2 text-gray-400 text-sm">
+                    <li><i class="fas fa-check text-primary-500 mr-2"></i>Share website URLs easily</li>
+                    <li><i class="fas fa-check text-primary-500 mr-2"></i>Create WiFi QR codes</li>
+                    <li><i class="fas fa-check text-primary-500 mr-2"></i>Add to business cards and flyers</li>
+                    <li><i class="fas fa-check text-primary-500 mr-2"></i>Event tickets and vouchers</li>
+                </ul>
+            </div>
+
+        </div>
+    </div>
+
+    <script src="../js/main.js"></script>
+    <script src="../js/api.js"></script>
+    <script>
+        let currentQRData = '';
+
+        // Update range values
+        document.getElementById('sizeInput').addEventListener('input', function () {
+            document.getElementById('sizeValue').textContent = this.value;
+        });
+        document.getElementById('borderInput').addEventListener('input', function () {
+            document.getElementById('borderValue').textContent = this.value;
+        });
+
+        async function generateQR() {
+            const data = document.getElementById('dataInput').value.trim();
+            const size = parseInt(document.getElementById('sizeInput').value);
+            const border = parseInt(document.getElementById('borderInput').value);
+
+            if (!data) {
+                ConverterUtils.showError('Please enter URL or text', 'messageContainer');
+                return;
+            }
+
+            try {
+                document.getElementById('loadingIndicator').classList.remove('hidden');
+                document.getElementById('results').classList.add('hidden');
+                document.getElementById('messageContainer').innerHTML = '';
+
+                const result = await API.generateQRCode(data, size, border);
+
+                document.getElementById('loadingIndicator').classList.add('hidden');
+                document.getElementById('qrImage').src = result.qr_code_image;
+                currentQRData = result.qr_code_image;
+                document.getElementById('results').classList.remove('hidden');
+
+                ConverterUtils.showSuccess('QR Code generated successfully!', 'messageContainer');
+
+            } catch (error) {
+                document.getElementById('loadingIndicator').classList.add('hidden');
+                ConverterUtils.showError(error.message || 'Failed to generate QR code', 'messageContainer');
+            }
+        }
+
+        function downloadQR() {
+            if (currentQRData) {
+                ConverterUtils.downloadBase64Image(currentQRData, 'qrcode.png');
+                ConverterUtils.showSuccess('QR Code downloaded!', 'messageContainer');
+            }
+        }
+
+        async function copyQRImage() {
+            try {
+                const img = document.getElementById('qrImage');
+                const canvas = document.createElement('canvas');
+                canvas.width = img.naturalWidth;
+                canvas.height = img.naturalHeight;
+                const ctx = canvas.getContext('2d');
+                ctx.drawImage(img, 0, 0);
+
+                canvas.toBlob(async (blob) => {
+                    await navigator.clipboard.write([
+                        new ClipboardItem({ 'image/png': blob })
+                    ]);
+                    ConverterUtils.showSuccess('QR Code copied to clipboard!', 'messageContainer');
+                });
+            } catch (error) {
+                ConverterUtils.showError('Copy failed. Please download instead.', 'messageContainer');
+            }
+        }
+
+        // Generate on Enter
+        document.getElementById('dataInput').addEventListener('keypress', function (e) {
+            if (e.key === 'Enter') generateQR();
+        });
+    </script>
+</body>
+
+</html>

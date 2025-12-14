@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Token Counter - Converter Tools</title>
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        primary: {
+                            500: '#3b82f6',
+                            600: '#2563eb',
+                            700: '#1d4ed8',
+                        },
+                        dark: {
+                            800: '#1e293b',
+                            850: '#1a2332',
+                            900: '#0f172a',
+                            950: '#020617',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- Styles -->
+    <link rel="stylesheet" href="../css/style.css">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body class="bg-gradient-to-br from-dark-950 via-dark-900 to-dark-850 text-gray-100 font-['Inter']">
+
+    <!-- Header -->
+    <nav class="sticky top-0 z-50 backdrop-blur-lg bg-dark-900/70 border-b border-gray-800">
+        <div class="container mx-auto px-4 py-4">
+            <div class="flex justify-between items-center">
+                <div class="flex items-center gap-3">
+                    <a href="../index.html" class="flex items-center gap-3">
+                        <div
+                            class="w-10 h-10 bg-gradient-to-br from-primary-500 to-primary-700 rounded-lg flex items-center justify-center">
+                            <i class="fas fa-exchange-alt text-white text-xl"></i>
+                        </div>
+                        <h1
+                            class="text-2xl font-bold bg-gradient-to-r from-primary-400 to-primary-600 bg-clip-text text-transparent">
+                            Converter Tools
+                        </h1>
+                    </a>
+                </div>
+                <a href="../index.html" class="text-gray-400 hover:text-primary-400 transition-colors">
+                    <i class="fas fa-arrow-left mr-2"></i>Back to Home
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="container mx-auto px-4 py-12">
+        <div class="max-w-4xl mx-auto">
+
+            <!-- Tool Header -->
+            <div class="mb-8">
+                <div class="flex items-center gap-3 mb-3">
+                    <div
+                        class="w-12 h-12 bg-gradient-to-br from-blue-500 to-cyan-500 rounded-xl flex items-center justify-center">
+                        <i class="fas fa-calculator text-white text-xl"></i>
+                    </div>
+                    <div>
+                        <h2 class="text-3xl font-bold">Token Counter</h2>
+                        <p class="text-gray-400">Estimate tokens and costs for LLM prompts</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Message Container -->
+            <div id="messageContainer"></div>
+
+            <!-- Tool Interface -->
+            <div class="bg-dark-850 border border-gray-800 rounded-2xl p-8">
+
+                <!-- Input Section -->
+                <div class="mb-6">
+                    <label class="block text-sm font-semibold mb-2">
+                        <i class="fas fa-file-alt mr-2 text-primary-500"></i>
+                        Enter your text
+                    </label>
+                    <textarea id="textInput"
+                        class="w-full h-48 bg-dark-900 border border-gray-700 rounded-lg p-4 text-gray-100 focus:border-primary-500 focus:outline-none"
+                        placeholder="Paste your prompt text here...&#10;&#10;For example:&#10;You are a helpful AI assistant. Please help me with..."></textarea>
+                    <div class="flex justify-between items-center mt-2 text-sm text-gray-500">
+                        <span id="charCount">0 characters</span>
+                        <button onclick="clearInput()" class="text-primary-400 hover:text-primary-300">
+                            <i class="fas fa-times-circle mr-1"></i>Clear
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Model Selection -->
+                <div class="mb-6">
+                    <label class="block text-sm font-semibold mb-2">
+                        <i class="fas fa-robot mr-2 text-primary-500"></i>
+                        LLM Model
+                    </label>
+                    <select id="modelSelect"
+                        class="w-full bg-dark-900 border border-gray-700 rounded-lg p-3 text-gray-100 focus:border-primary-500 focus:outline-none">
+                        <option value="gpt-4">GPT-4 (OpenAI)</option>
+                        <option value="gpt-3.5-turbo">GPT-3.5 Turbo (OpenAI)</option>
+                        <option value="claude">Claude (Anthropic)</option>
+                        <option value="gemini">Gemini (Google)</option>
+                    </select>
+                </div>
+
+                <!-- Convert Button -->
+                <button onclick="countTokens()"
+                    class="w-full py-4 bg-gradient-to-r from-primary-600 to-primary-700 hover:from-primary-500 hover:to-primary-600 rounded-lg font-semibold text-white shadow-lg shadow-primary-500/30 transition-all transform hover:scale-105">
+                    <i class="fas fa-calculator mr-2"></i>Count Tokens
+                </button>
+
+                <!-- Loading Indicator -->
+                <div id="loadingIndicator" class="hidden mt-6 text-center">
+                    <div class="spinner mx-auto"></div>
+                    <p class="text-gray-400 mt-3">Analyzing...</p>
+                </div>
+
+                <!-- Results Section -->
+                <div id="results" class="hidden mt-8">
+                    <h3 class="text-xl font-semibold mb-4 flex items-center">
+                        <i class="fas fa-chart-bar mr-2 text-primary-500"></i>
+                        Results
+                    </h3>
+
+                    <div class="grid md:grid-cols-2 gap-4">
+                        <!-- Characters -->
+                        <div class="bg-dark-900 border border-gray-700 rounded-lg p-4">
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <p class="text-gray-400 text-sm">Characters</p>
+                                    <p class="text-2xl font-bold text-white" id="resultCharacters">-</p>
+                                </div>
+                                <div class="w-12 h-12 bg-blue-500/10 rounded-lg flex items-center justify-center">
+                                    <i class="fas fa-font text-blue-500 text-xl"></i>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Words -->
+                        <div class="bg-dark-900 border border-gray-700 rounded-lg p-4">
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <p class="text-gray-400 text-sm">Words</p>
+                                    <p class="text-2xl font-bold text-white" id="resultWords">-</p>
+                                </div>
+                                <div class="w-12 h-12 bg-purple-500/10 rounded-lg flex items-center justify-center">
+                                    <i class="fas fa-file-word text-purple-500 text-xl"></i>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Tokens -->
+                        <div class="bg-dark-900 border border-gray-700 rounded-lg p-4">
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <p class="text-gray-400 text-sm">Estimated Tokens</p>
+                                    <p class="text-2xl font-bold text-primary-400" id="resultTokens">-</p>
+                                </div>
+                                <div class="w-12 h-12 bg-primary-500/10 rounded-lg flex items-center justify-center">
+                                    <i class="fas fa-coins text-primary-500 text-xl"></i>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Cost -->
+                        <div class="bg-dark-900 border border-gray-700 rounded-lg p-4">
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <p class="text-gray-400 text-sm">Estimated Cost</p>
+                                    <p class="text-2xl font-bold text-green-400" id="resultCost">-</p>
+                                </div>
+                                <div class="w-12 h-12 bg-green-500/10 rounded-lg flex items-center justify-center">
+                                    <i class="fas fa-dollar-sign text-green-500 text-xl"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Model Info -->
+                    <div class="mt-4 p-4 bg-dark-900 border border-gray-700 rounded-lg">
+                        <p class="text-sm text-gray-400">
+                            <i class="fas fa-info-circle mr-2"></i>
+                            Model: <span class="text-white" id="resultModel">-</span>
+                        </p>
+                    </div>
+
+                    <!-- Copy Button -->
+                    <button onclick="copyResults()"
+                        class="mt-4 px-6 py-3 bg-dark-900 hover:bg-dark-800 border border-gray-700 rounded-lg transition-colors">
+                        <i class="fas fa-copy mr-2"></i>Copy Results
+                    </button>
+                </div>
+
+            </div>
+
+            <!-- Info Section -->
+            <div class="mt-8 p-6 bg-dark-850 border border-gray-800 rounded-2xl">
+                <h3 class="text-lg font-semibold mb-3">
+                    <i class="fas fa-lightbulb mr-2 text-yellow-500"></i>
+                    About Token Counting
+                </h3>
+                <ul class="space-y-2 text-gray-400 text-sm">
+                    <li><i class="fas fa-check text-primary-500 mr-2"></i>Estimates tokens for GPT-4, Claude, Gemini,
+                        and other LLMs</li>
+                    <li><i class="fas fa-check text-primary-500 mr-2"></i>Calculates approximate API costs based on
+                        current rates</li>
+                    <li><i class="fas fa-check text-primary-500 mr-2"></i>Simple approximation: ~4 characters = 1 token
+                        for English</li>
+                    <li><i class="fas fa-check text-primary-500 mr-2"></i>Use this to optimize prompts and manage API
+                        costs</li>
+                </ul>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="../js/main.js"></script>
+    <script src="../js/api.js"></script>
+    <script>
+        // Update character count
+        document.getElementById('textInput').addEventListener('input', function () {
+            const charCount = this.value.length;
+            document.getElementById('charCount').textContent = `${charCount} characters`;
+        });
+
+        // Clear input
+        function clearInput() {
+            document.getElementById('textInput').value = '';
+            document.getElementById('charCount').textContent = '0 characters';
+            document.getElementById('results').classList.add('hidden');
+        }
+
+        // Count tokens
+        async function countTokens() {
+            const text = document.getElementById('textInput').value.trim();
+            const model = document.getElementById('modelSelect').value;
+
+            if (!text) {
+                ConverterUtils.showError('Please enter some text', 'messageContainer');
+                return;
+            }
+
+            try {
+                // Show loading
+                document.getElementById('loadingIndicator').classList.remove('hidden');
+                document.getElementById('results').classList.add('hidden');
+                document.getElementById('messageContainer').innerHTML = '';
+
+                // Call API
+                const result = await API.tokenCount(text, model);
+
+                // Hide loading
+                document.getElementById('loadingIndicator').classList.add('hidden');
+
+                // Display results
+                document.getElementById('resultCharacters').textContent = result.characters.toLocaleString();
+                document.getElementById('resultWords').textContent = result.words.toLocaleString();
+                document.getElementById('resultTokens').textContent = result.estimated_tokens.toLocaleString();
+                document.getElementById('resultCost').textContent = `$${result.estimated_cost_usd.toFixed(6)}`;
+                document.getElementById('resultModel').textContent = result.model;
+
+                document.getElementById('results').classList.remove('hidden');
+
+                ConverterUtils.showSuccess('Token count calculated successfully!', 'messageContainer');
+
+            } catch (error) {
+                document.getElementById('loadingIndicator').classList.add('hidden');
+                ConverterUtils.showError(error.message || 'Failed to count tokens. Please try again.', 'messageContainer');
+            }
+        }
+
+        // Copy results
+        function copyResults() {
+            const characters = document.getElementById('resultCharacters').textContent;
+            const words = document.getElementById('resultWords').textContent;
+            const tokens = document.getElementById('resultTokens').textContent;
+            const cost = document.getElementById('resultCost').textContent;
+            const model = document.getElementById('resultModel').textContent;
+
+            const resultText = `Token Counter Results
+Model: ${model}
+Characters: ${characters}
+Words: ${words}
+Tokens: ${tokens}
+Estimated Cost: ${cost}`;
+
+            navigator.clipboard.writeText(resultText).then(() => {
+                ConverterUtils.showSuccess('Results copied to clipboard!', 'messageContainer');
+            });
+        }
+
+        // Allow Enter key to submit in textarea
+        document.getElementById('textInput').addEventListener('keydown', function (e) {
+            if (e.ctrlKey && e.key === 'Enter') {
+                countTokens();
+            }
+        });
+    </script>
+</body>
+
+</html>
