@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en" datathe="dark">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Unit Converter - Converter Tools</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>tailwind.config = { darkMode: 'class', theme: { extend: { colors: { primary: { 500: '#3b82f6', 600: '#2563eb', 700: '#1d4ed8' }, dark: { 800: '#1e293b', 850: '#1a2332', 900: '#0f172a', 950: '#020617' } } } } }</script>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body class="bg-gradient-to-br from-dark-950 via-dark-900 to-dark-850 text-gray-100 font-['Inter']">
+    <nav class="sticky top-0 z-50 backdrop-blur-lg bg-dark-900/70 border-b border-gray-800">
+        <div class="container mx-auto px-4 py-4">
+            <div class="flex justify-between items-center">
+                <a href="../index.html" class="flex items-center gap-3">
+                    <div
+                        class="w-10 h-10 bg-gradient-to-br from-primary-500 to-primary-700 rounded-lg flex items-center justify-center">
+                        <i class="fas fa-exchange-alt text-white text-xl"></i></div>
+                    <h1
+                        class="text-2xl font-bold bg-gradient-to-r from-primary-400 to-primary-600 bg-clip-text text-transparent">
+                        Converter Tools</h1>
+                </a>
+                <a href="../index.html" class="text-gray-400 hover:text-primary-400 transition-colors"><i
+                        class="fas fa-arrow-left mr-2"></i>Back</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mx-auto px-4 py-12">
+        <div class="max-w-4xl mx-auto">
+            <div class="mb-8">
+                <div class="flex items-center gap-3 mb-3">
+                    <div
+                        class="w-12 h-12 bg-gradient-to-br from-orange-500 to-red-500 rounded-xl flex items-center justify-center">
+                        <i class="fas fa-ruler text-white text-xl"></i></div>
+                    <div>
+                        <h2 class="text-3xl font-bold">Unit Converter</h2>
+                        <p class="text-gray-400">Convert length, weight, temperature, and area</p>
+                    </div>
+                </div>
+            </div>
+
+            <div id="messageContainer"></div>
+
+            <div class="bg-dark-850 border border-gray-800 rounded-2xl p-8">
+                <div class="mb-6">
+                    <label class="block text-sm font-semibold mb-2"><i
+                            class="fas fa-list mr-2 text-primary-500"></i>Category</label>
+                    <select id="categorySelect" onchange="updateUnits()"
+                        class="w-full bg-dark-900 border border-gray-700 rounded-lg p-3 text-gray-100 focus:border-primary-500 focus:outline-none">
+                        <option value="length">Length</option>
+                        <option value="weight">Weight</option>
+                        <option value="temperature">Temperature</option>
+                        <option value="area">Area</option>
+                    </select>
+                </div>
+
+                <div class="grid md:grid-cols-2 gap-6 mb-6">
+                    <div>
+                        <label class="block text-sm font-semibold mb-2"><i
+                                class="fas fa-arrow-right mr-2 text-primary-500"></i>From</label>
+                        <select id="fromUnit"
+                            class="w-full bg-dark-900 border border-gray-700 rounded-lg p-3 text-gray-100 focus:border-primary-500 focus:outline-none"></select>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-semibold mb-2"><i
+                                class="fas fa-arrow-left mr-2 text-primary-500"></i>To</label>
+                        <select id="toUnit"
+                            class="w-full bg-dark-900 border border-gray-700 rounded-lg p-3 text-gray-100 focus:border-primary-500 focus:outline-none"></select>
+                    </div>
+                </div>
+
+                <div class="mb-6">
+                    <label class="block text-sm font-semibold mb-2"><i
+                            class="fas fa-hashtag mr-2 text-primary-500"></i>Value</label>
+                    <input type="number" id="valueInput"
+                        class="w-full bg-dark-900 border border-gray-700 rounded-lg p-4 text-gray-100 focus:border-primary-500 focus:outline-none"
+                        placeholder="100" value="100">
+                </div>
+
+                <button onclick="convert()"
+                    class="w-full py-4 bg-gradient-to-r from-primary-600 to-primary-700 hover:from-primary-500 hover:to-primary-600 rounded-lg font-semibold text-white shadow-lg shadow-primary-500/30 transition-all transform hover:scale-105">
+                    <i class="fas fa-exchange-alt mr-2"></i>Convert
+                </button>
+
+                <div id="loadingIndicator" class="hidden mt-6 text-center">
+                    <div class="spinner mx-auto"></div>
+                    <p class="text-gray-400 mt-3">Converting...</p>
+                </div>
+
+                <div id="results" class="hidden mt-8">
+                    <h3 class="text-xl font-semibold mb-4"><i class="fas fa-check-circle mr-2 text-green-500"></i>Result
+                    </h3>
+                    <div class="bg-dark-900 border border-gray-700 rounded-lg p-6 text-center">
+                        <p class="text-4xl font-bold text-primary-400" id="resultValue">0</p>
+                        <p class="text-gray-400 mt-2" id="resultUnit">unit</p>
+                    </div>
+                    <button onclick="copyResult()"
+                        class="mt-4 w-full px-6 py-3 bg-dark-900 hover:bg-dark-800 border border-gray-700 rounded-lg transition-colors"><i
+                            class="fas fa-copy mr-2"></i>Copy Result</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="../js/main.js"></script>
+    <script src="../js/api.js"></script>
+    <script>
+        const units = {
+            length: ['meter', 'kilometer', 'centimeter', 'millimeter', 'mile', 'yard', 'foot', 'inch'],
+            weight: ['kilogram', 'gram', 'milligram', 'pound', 'ounce'],
+            temperature: ['celsius', 'fahrenheit', 'kelvin'],
+            area: ['square_meter', 'square_kilometer', 'square_mile', 'acre', 'hectare']
+        };
+
+        function updateUnits() {
+            const category = document.getElementById('categorySelect').value;
+            const fromSelect = document.getElementById('fromUnit');
+            const toSelect = document.getElementById('toUnit');
+
+            fromSelect.innerHTML = '';
+            toSelect.innerHTML = '';
+
+            units[category].forEach(unit => {
+                fromSelect.innerHTML += `<option value="${unit}">${unit}</option>`;
+                toSelect.innerHTML += `<option value="${unit}">${unit}</option>`;
+            });
+            toSelect.selectedIndex = 1;
+        }
+
+        updateUnits();
+
+        async function convert() {
+            const value = parseFloat(document.getElementById('valueInput').value);
+            const fromUnit = document.getElementById('fromUnit').value;
+            const toUnit = document.getElementById('toUnit').value;
+            const category = document.getElementById('categorySelect').value;
+
+            if (!value && value !== 0) {
+                ConverterUtils.showError('Please enter a value', 'messageContainer');
+                return;
+            }
+
+            try {
+                document.getElementById('loadingIndicator').classList.remove('hidden');
+                document.getElementById('results').classList.add('hidden');
+                document.getElementById('messageContainer').innerHTML = '';
+
+                const result = await API.convertUnit(value, fromUnit, toUnit, category);
+
+                document.getElementById('loadingIndicator').classList.add('hidden');
+                document.getElementById('resultValue').textContent = result.converted_value.toFixed(4);
+                document.getElementById('resultUnit').textContent = result.to_unit;
+                document.getElementById('results').classList.remove('hidden');
+
+                ConverterUtils.showSuccess('Converted successfully!', 'messageContainer');
+            } catch (error) {
+                document.getElementById('loadingIndicator').classList.add('hidden');
+                ConverterUtils.showError(error.message || 'Conversion failed', 'messageContainer');
+            }
+        }
+
+        function copyResult() {
+            const value = document.getElementById('resultValue').textContent;
+            const unit = document.getElementById('resultUnit').textContent;
+            navigator.clipboard.writeText(`${value} ${unit}`).then(() => {
+                ConverterUtils.showSuccess('Copied to clipboard!', 'messageContainer');
+            });
+        }
+    </script>
+</body>
+
+</html>

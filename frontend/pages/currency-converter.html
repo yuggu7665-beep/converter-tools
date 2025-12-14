@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Currency Converter - Converter Tools</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: { extend: { colors: { primary: { 500: '#3b82f6', 600: '#2563eb', 700: '#1d4ed8' }, dark: { 800: '#1e293b', 850: '#1a2332', 900: '#0f172a', 950: '#020617' } } } }
+        }
+    </script>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body class="bg-gradient-to-br from-dark-950 via-dark-900 to-dark-850 text-gray-100 font-['Inter']">
+
+    <nav class="sticky top-0 z-50 backdrop-blur-lg bg-dark-900/70 border-b border-gray-800">
+        <div class="container mx-auto px-4 py-4">
+            <div class="flex justify-between items-center">
+                <a href="../index.html" class="flex items-center gap-3">
+                    <div
+                        class="w-10 h-10 bg-gradient-to-br from-primary-500 to-primary-700 rounded-lg flex items-center justify-center">
+                        <i class="fas fa-exchange-alt text-white text-xl"></i>
+                    </div>
+                    <h1
+                        class="text-2xl font-bold bg-gradient-to-r from-primary-400 to-primary-600 bg-clip-text text-transparent">
+                        Converter Tools</h1>
+                </a>
+                <a href="../index.html" class="text-gray-400 hover:text-primary-400 transition-colors"><i
+                        class="fas fa-arrow-left mr-2"></i>Back</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mx-auto px-4 py-12">
+        <div class="max-w-4xl mx-auto">
+            <div class="mb-8">
+                <div class="flex items-center gap-3 mb-3">
+                    <div
+                        class="w-12 h-12 bg-gradient-to-br from-green-500 to-emerald-500 rounded-xl flex items-center justify-center">
+                        <i class="fas fa-dollar-sign text-white text-xl"></i>
+                    </div>
+                    <div>
+                        <h2 class="text-3xl font-bold">Currency Converter</h2>
+                        <p class="text-gray-400">Real-time exchange rates</p>
+                    </div>
+                </div>
+            </div>
+
+            <div id="messageContainer"></div>
+
+            <div class="bg-dark-850 border border-gray-800 rounded-2xl p-8">
+                <div class="grid md:grid-cols-2 gap-6 mb-6">
+                    <div>
+                        <label class="block text-sm font-semibold mb-2"><i
+                                class="fas fa-money-bill mr-2 text-primary-500"></i>Amount</label>
+                        <input type="number" id="amountInput"
+                            class="w-full bg-dark-900 border border-gray-700 rounded-lg p-4 text-gray-100 focus:border-primary-500 focus:outline-none"
+                            placeholder="100" value="100">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-semibold mb-2"><i
+                                class="fas fa-flag mr-2 text-primary-500"></i>From Currency</label>
+                        <select id="fromCurrency"
+                            class="w-full bg-dark-900 border border-gray-700 rounded-lg p-3 text-gray-100 focus:border-primary-500 focus:outline-none">
+                            <option value="USD">USD - US Dollar</option>
+                            <option value="EUR">EUR - Euro</option>
+                            <option value="GBP">GBP - British Pound</option>
+                            <option value="JPY">JPY - Japanese Yen</option>
+                            <option value="INR">INR - Indian Rupee</option>
+                            <option value="AUD">AUD - Australian Dollar</option>
+                            <option value="CAD">CAD - Canadian Dollar</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="mb-6">
+                    <label class="block text-sm font-semibold mb-2"><i
+                            class="fas fa-exchange-alt mr-2 text-primary-500"></i>To Currency</label>
+                    <select id="toCurrency"
+                        class="w-full bg-dark-900 border border-gray-700 rounded-lg p-3 text-gray-100 focus:border-primary-500 focus:outline-none">
+                        <option value="EUR">EUR - Euro</option>
+                        <option value="USD">USD - US Dollar</option>
+                        <option value="GBP">GBP - British Pound</option>
+                        <option value="JPY">JPY - Japanese Yen</option>
+                        <option value="INR">INR - Indian Rupee</option>
+                        <option value="AUD">AUD - Australian Dollar</option>
+                        <option value="CAD">CAD - Canadian Dollar</option>
+                    </select>
+                </div>
+
+                <button onclick="convertCurrency()"
+                    class="w-full py-4 bg-gradient-to-r from-primary-600 to-primary-700 hover:from-primary-500 hover:to-primary-600 rounded-lg font-semibold text-white shadow-lg shadow-primary-500/30 transition-all transform hover:scale-105">
+                    <i class="fas fa-sync-alt mr-2"></i>Convert Currency
+                </button>
+
+                <div id="loadingIndicator" class="hidden mt-6 text-center">
+                    <div class="spinner mx-auto"></div>
+                    <p class="text-gray-400 mt-3">Converting...</p>
+                </div>
+
+                <div id="results" class="hidden mt-8">
+                    <h3 class="text-xl font-semibold mb-4"><i class="fas fa-check-circle mr-2 text-green-500"></i>Result
+                    </h3>
+                    <div class="bg-dark-900 border border-gray-700 rounded-lg p-6 text-center">
+                        <p class="text-4xl font-bold text-primary-400 mb-2" id="resultAmount">0.00</p>
+                        <p class="text-gray-400" id="resultCurrency">EUR</p>
+                        <div class="mt-4 pt-4 border-t border-gray-700">
+                            <p class="text-sm text-gray-500">Exchange Rate: <span class="text-white"
+                                    id="resultRate">1.0</span></p>
+                            <p class="text-xs text-gray-600 mt-2">Last updated: <span id="resultTime">now</span></p>
+                        </div>
+                    </div>
+                    <button onclick="copyResult()"
+                        class="mt-4 w-full px-6 py-3 bg-dark-900 hover:bg-dark-800 border border-gray-700 rounded-lg transition-colors">
+                        <i class="fas fa-copy mr-2"></i>Copy Result
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="../js/main.js"></script>
+    <script src="../js/api.js"></script>
+    <script>
+        async function convertCurrency() {
+            const amount = parseFloat(document.getElementById('amountInput').value);
+            const from = document.getElementById('fromCurrency').value;
+            const to = document.getElementById('toCurrency').value;
+
+            if (!amount || amount <= 0) {
+                ConverterUtils.showError('Please enter a valid amount', 'messageContainer');
+                return;
+            }
+
+            try {
+                document.getElementById('loadingIndicator').classList.remove('hidden');
+                document.getElementById('results').classList.add('hidden');
+                document.getElementById('messageContainer').innerHTML = '';
+
+                const result = await API.convertCurrency(amount, from, to);
+
+                document.getElementById('loadingIndicator').classList.add('hidden');
+                document.getElementById('resultAmount').textContent = result.converted_amount.toFixed(2);
+                document.getElementById('resultCurrency').textContent = result.to_currency;
+                document.getElementById('resultRate').textContent = result.exchange_rate.toFixed(4);
+                document.getElementById('resultTime').textContent = new Date(result.last_updated).toLocaleString();
+                document.getElementById('results').classList.remove('hidden');
+
+                ConverterUtils.showSuccess('Currency converted successfully!', 'messageContainer');
+            } catch (error) {
+                document.getElementById('loadingIndicator').classList.add('hidden');
+                ConverterUtils.showError(error.message || 'Conversion failed', 'messageContainer');
+            }
+        }
+
+        function copyResult() {
+            const amount = document.getElementById('resultAmount').textContent;
+            const currency = document.getElementById('resultCurrency').textContent;
+            navigator.clipboard.writeText(`${amount} ${currency}`).then(() => {
+                ConverterUtils.showSuccess('Result copied!', 'messageContainer');
+            });
+        }
+    </script>
+</body>
+
+</html>
