@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- SEO Meta Tags -->
+    <title>Converter Tools - 18 Free Online Converters for AI, Media, Finance & More</title>
+    <meta name="description" content="Free online converter tools for AI & Data, Media, Finance, Developer Tools, Utilities, and Education. Convert CSV to JSONL, compress images, calculate GST, and more.">
+    <meta name="keywords" content="converter tools, online converter, CSV to JSONL, image compressor, currency converter, base64 encoder, QR code generator">
+    <meta name="author" content="Converter Tools">
+    
+    <!-- Open Graph / Social Media Tags -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://converter-tools.netlify.app/">
+    <meta property="og:title" content="Converter Tools - Free Online Converters">
+    <meta property="og:description" content="18 free trending converter tools across 6 categories. Convert, calculate, and transform data instantly.">
+    <meta property="og:image" content="/assets/og-image.jpg">
+    
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Converter Tools">
+    <meta name="twitter:description" content="Free online converter tools for AI, Media, Finance & more">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Custom Tailwind Config -->
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        primary: {
+                            50: '#f0f9ff',
+                            100: '#e0f2fe',
+                            500: '#3b82f6',
+                            600: '#2563eb',
+                            700: '#1d4ed8',
+                            800: '#1e40af',
+                        },
+                        dark: {
+                            800: '#1e293b',
+                            850: '#1a2332',
+                            900: '#0f172a',
+                            950: '#020617',
+                        }
+                    },
+                }
+            }
+        }
+    </script>
+    
+    <!-- Custom Styles -->
+    <link rel="stylesheet" href="css/style.css">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="bg-gradient-to-br from-dark-950 via-dark-900 to-dark-850 text-gray-100 font-['Inter']">
+    
+    <!-- Header / Navbar -->
+    <nav class="sticky top-0 z-50 backdrop-blur-lg bg-dark-900/70 border-b border-gray-800">
+        <div class="container mx-auto px-4 py-4">
+            <div class="flex justify-between items-center">
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 bg-gradient-to-br from-primary-500 to-primary-700 rounded-lg flex items-center justify-center">
+                        <i class="fas fa-exchange-alt text-white text-xl"></i>
+                    </div>
+                    <h1 class="text-2xl font-bold bg-gradient-to-r from-primary-400 to-primary-600 bg-clip-text text-transparent">
+                        Converter Tools
+                    </h1>
+                </div>
+                
+                <div class="flex items-center gap-4">
+                    <a href="/api/docs" target="_blank" class="hidden md:block text-gray-400 hover:text-primary-400 transition-colors">
+                        <i class="fas fa-book mr-2"></i>API Docs
+                    </a>
+                    <button id="themeToggle" class="p-2 rounded-lg bg-dark-800 hover:bg-dark-700 transition-colors">
+                        <i class="fas fa-moon" id="themeIcon"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="container mx-auto px-4 py-16 md:py-24">
+        <div class="text-center max-w-4xl mx-auto">
+            <div class="inline-block mb-6">
+                <span class="px-4 py-2 bg-primary-500/20 border border-primary-500/30 rounded-full text-primary-400 text-sm font-semibold">
+                    ✨ 18 Free Trending Tools
+                </span>
+            </div>
+            
+            <h2 class="text-4xl md:text-6xl font-bold mb-6 bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 bg-clip-text text-transparent">
+                Convert Anything,<br>Instantly & Free
+            </h2>
+            
+            <p class="text-xl text-gray-400 mb-8 max-w-2xl mx-auto">
+                Production-grade converter tools for developers, creators, and professionals. No signup required.
+            </p>
+            
+            <div class="flex flex-col sm:flex-row gap-4 justify-center items-center mb-12">
+                <a href="#tools" class="px-8 py-4 bg-gradient-to-r from-primary-600 to-primary-700 hover:from-primary-500 hover:to-primary-600 rounded-lg font-semibold text-white shadow-lg shadow-primary-500/30 transition-all transform hover:scale-105">
+                    Browse Tools <i class="fas fa-arrow-down ml-2"></i>
+                </a>
+                <a href="/api/docs" target="_blank" class="px-8 py-4 bg-dark-800 hover:bg-dark-700 border border-gray-700 rounded-lg font-semibold transition-all">
+                    View API <i class="fas fa-code ml-2"></i>
+                </a>
+            </div>
+            
+            <!-- Stats -->
+            <div class="grid grid-cols-3 gap-8 max-w-2xl mx-auto">
+                <div>
+                    <div class="text-3xl md:text-4xl font-bold text-primary-400">18</div>
+                    <div class="text-sm text-gray-500">Converters</div>
+                </div>
+                <div>
+                    <div class="text-3xl md:text-4xl font-bold text-primary-400">6</div>
+                    <div class="text-sm text-gray-500">Categories</div>
+                </div>
+                <div>
+                    <div class="text-3xl md:text-4xl font-bold text-primary-400">100%</div>
+                    <div class="text-sm text-gray-500">Free</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Tools Categories Section -->
+    <section id="tools" class="container mx-auto px-4 py-16">
+        <div class="text-center mb-12">
+            <h3 class="text-3xl md:text-4xl font-bold mb-4">Choose Your Category</h3>
+            <p class="text-gray-400">Select from our trending converter tools</p>
+        </div>
+
+        <!-- Category Grid -->
+        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-7xl mx-auto">
+            
+            <!-- AI & Data -->
+            <div class="group bg-dark-850 border border-gray-800 rounded-2xl p-6 hover:border-primary-500 transition-all hover:shadow-xl hover:shadow-primary-500/10 cursor-pointer transform hover:-translate-y-1" onclick="window.location.href='pages/ai-data.html'">
+                <div class="w-14 h-14 bg-gradient-to-br from-blue-500 to-cyan-500 rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+                    <i class="fas fa-brain text-white text-2xl"></i>
+                </div>
+                <h4 class="text-xl font-bold mb-3 text-white">AI & Data</h4>
+                <p class="text-gray-400 mb-4 text-sm">Transform data for AI and machine learning workflows</p>
+                <div class="space-y-2 text-sm text-gray-500">
+                    <div class="flex items-center">
+                        <i class="fas fa-check text-primary-500 mr-2"></i>
+                        CSV → JSONL Converter
+                    </div>
+                    <div class="flex items-center">
+                        <i class="fas fa-check text-primary-500 mr-2"></i>
+                        Token Counter
+                    </div>
+                    <div class="flex items-center">
+                        <i class="fas fa-check text-primary-500 mr-2"></i>
+                        JSON → CSV Converter
+                    </div>
+                </div>
+                <div class="mt-6 flex items-center text-primary-400 font-semibold group-hover:translate-x-2 transition-transform">
+                    Explore Tools <i class="fas fa-arrow-right ml-2"></i>
+                </div>
+            </div>
+
+            <!-- Media & Content -->
+            <div class="group bg-dark-850 border border-gray-800 rounded-2xl p-6 hover:border-primary-500 transition-all hover:shadow-xl hover:shadow-primary-500/10 cursor-pointer transform hover:-translate-y-1" onclick="window.location.href='pages/media.html'">
+                <div class="w-14 h-14 bg-gradient-to-br from-purple-500 to-pink-500 rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+                    <i class="fas fa-image text-white text-2xl"></i>
+                </div>
+                <h4 class="text-xl font-bold mb-3 text-white">Media & Content</h4>
+                <p class="text-gray-400 mb-4 text-sm">Optimize and transform media files</p>
+                <div class="space-y-2 text-sm text-gray-500">
+                    <div class="flex items-center">
+                        <i class="fas fa-check text-primary-500 mr-2"></i>
+                        Image → WebP Converter
+                    </div>
+                    <div class="flex items-center">
+                        <i class="fas fa-check text-primary-500 mr-2"></i>
+                        Image Compressor
+                    </div>
+                    <div class="flex items-center">
+                        <i class="fas fa-check text-primary-500 mr-2"></i>
+                        PDF → Text Extractor
+                    </div>
+                </div>
+                <div class="mt-6 flex items-center text-primary-400 font-semibold group-hover:translate-x-2 transition-transform">
+                    Explore Tools <i class="fas fa-arrow-right ml-2"></i>
+                </div>
+            </div>
+
+            <!-- Finance & Crypto -->
+            <div class="group bg-dark-850 border border-gray-800 rounded-2xl p-6 hover:border-primary-500 transition-all hover:shadow-xl hover:shadow-primary-500/10 cursor-pointer transform hover:-translate-y-1" onclick="window.location.href='pages/finance.html'">
+                <div class="w-14 h-14 bg-gradient-to-br from-green-500 to-emerald-500 rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+                    <i class="fas fa-dollar-sign text-white text-2xl"></i>
+                </div>
+                <h4 class="text-xl font-bold mb-3 text-white">Finance & Crypto</h4>
+                <p class="text-gray-400 mb-4 text-sm">Real-time financial calculations and conversions</p>
+                <div class="space-y-2 text-sm text-gray-500">
+                    <div class="flex items-center">
+                        <i class="fas fa-check text-primary-500 mr-2"></i>
+                        Currency Converter
+                    </div>
+                    <div class="flex items-center">
+                        <i class="fas fa-check text-primary-500 mr-2"></i>
+                        Crypto Price Tracker
+                    </div>
+                    <div class="flex items-center">
+                        <i class="fas fa-check text-primary-500 mr-2"></i>
+                        GST/Tax Calculator
+                    </div>
+                </div>
+                <div class="mt-6 flex items-center text-primary-400 font-semibold group-hover:translate-x-2 transition-transform">
+                    Explore Tools <i class="fas fa-arrow-right ml-2"></i>
+                </div>
+            </div>
+
+            <!-- Developer Tools -->
+            <div class="group bg-dark-850 border border-gray-800 rounded-2xl p-6 hover:border-primary-500 transition-all hover:shadow-xl hover:shadow-primary-500/10 cursor-pointer transform hover:-translate-y-1" onclick="window.location.href='pages/developer.html'">
+                <div class="w-14 h-14 bg-gradient-to-br from-orange-500 to-red-500 rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+                    <i class="fas fa-code text-white text-2xl"></i>
+                </div>
+                <h4 class="text-xl font-bold mb-3 text-white">Developer Tools</h4>
+                <p class="text-gray-400 mb-4 text-sm">Essential tools for developers</p>
+                <div class="space-y-2 text-sm text-gray-500">
+                    <div class="flex items-center">
+                        <i class="fas fa-check text-primary-500 mr-2"></i>
+                        JSON ↔ YAML Converter
+                    </div>
+                    <div class="flex items-center">
+                        <i class="fas fa-check text-primary-500 mr-2"></i>
+                        Base64 Encoder/Decoder
+                    </div>
+                    <div class="flex items-center">
+                        <i class="fas fa-check text-primary-500 mr-2"></i>
+                        JWT Token Decoder
+                    </div>
+                </div>
+                <div class="mt-6 flex items-center text-primary-400 font-semibold group-hover:translate-x-2 transition-transform">
+                    Explore Tools <i class="fas fa-arrow-right ml-2"></i>
+                </div>
+            </div>
+
+            <!-- Daily Utility -->
+            <div class="group bg-dark-850 border border-gray-800 rounded-2xl p-6 hover:border-primary-500 transition-all hover:shadow-xl hover:shadow-primary-500/10 cursor-pointer transform hover:-translate-y-1" onclick="window.location.href='pages/utility.html'">
+                <div class="w-14 h-14 bg-gradient-to-br from-yellow-500 to-amber-500 rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+                    <i class="fas fa-tools text-white text-2xl"></i>
+                </div>
+                <h4 class="text-xl font-bold mb-3 text-white">Daily Utility</h4>
+                <p class="text-gray-400 mb-4 text-sm">Everyday conversion and utility tools</p>
+                <div class="space-y-2 text-sm text-gray-500">
+                    <div class="flex items-center">
+                        <i class="fas fa-check text-primary-500 mr-2"></i>
+                        Unit Converter
+                    </div>
+                    <div class="flex items-center">
+                        <i class="fas fa-check text-primary-500 mr-2"></i>
+                        Timezone Converter
+                    </div>
+                    <div class="flex items-center">
+                        <i class="fas fa-check text-primary-500 mr-2"></i>
+                        QR Code Generator
+                    </div>
+                </div>
+                <div class="mt-6 flex items-center text-primary-400 font-semibold group-hover:translate-x-2 transition-transform">
+                    Explore Tools <i class="fas fa-arrow-right ml-2"></i>
+                </div>
+            </div>
+
+            <!-- Education & Engineering -->
+            <div class="group bg-dark-850 border border-gray-800 rounded-2xl p-6 hover:border-primary-500 transition-all hover:shadow-xl hover:shadow-primary-500/10 cursor-pointer transform hover:-translate-y-1" onclick="window.location.href='pages/education.html'">
+                <div class="w-14 h-14 bg-gradient-to-br from-indigo-500 to-violet-500 rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+                    <i class="fas fa-graduation-cap text-white text-2xl"></i>
+                </div>
+                <h4 class="text-xl font-bold mb-3 text-white">Education & Engineering</h4>
+                <p class="text-gray-400 mb-4 text-sm">Academic and engineering calculations</p>
+                <div class="space-y-2 text-sm text-gray-500">
+                    <div class="flex items-center">
+                        <i class="fas fa-check text-primary-500 mr-2"></i>
+                        Number System Converter
+                    </div>
+                    <div class="flex items-center">
+                        <i class="fas fa-check text-primary-500 mr-2"></i>
+                        Color Code Converter
+                    </div>
+                    <div class="flex items-center">
+                        <i class="fas fa-check text-primary-500 mr-2"></i>
+                        Percentage Calculator
+                    </div>
+                </div>
+                <div class="mt-6 flex items-center text-primary-400 font-semibold group-hover:translate-x-2 transition-transform">
+                    Explore Tools <i class="fas fa-arrow-right ml-2"></i>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Ad Placeholder -->
+    <section class="container mx-auto px-4 py-8">
+        <div class="max-w-4xl mx-auto p-8 bg-dark-850 border border-dashed border-gray-700 rounded-xl text-center">
+            <p class="text-gray-500 text-sm">Advertisement Space • 728x90</p>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="container mx-auto px-4 py-16">
+        <div class="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+            <div class="text-center">
+                <div class="w-16 h-16 bg-primary-500/10 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <i class="fas fa-bolt text-primary-400 text-2xl"></i>
+                </div>
+                <h5 class="text-xl font-semibold mb-2">Lightning Fast</h5>
+                <p class="text-gray-500 text-sm">Instant conversions with optimized algorithms</p>
+            </div>
+            <div class="text-center">
+                <div class="w-16 h-16 bg-primary-500/10 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <i class="fas fa-lock text-primary-400 text-2xl"></i>
+                </div>
+                <h5 class="text-xl font-semibold mb-2">100% Private</h5>
+                <p class="text-gray-500 text-sm">All processing happens securely, no data stored</p>
+            </div>
+            <div class="text-center">
+                <div class="w-16 h-16 bg-primary-500/10 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <i class="fas fa-mobile-alt text-primary-400 text-2xl"></i>
+                </div>
+                <h5 class="text-xl font-semibold mb-2">Mobile Friendly</h5>
+                <p class="text-gray-500 text-sm">Works perfectly on all devices</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="border-t border-gray-800 mt-16">
+        <div class="container mx-auto px-4 py-8">
+            <div class="flex flex-col md:flex-row justify-between items-center gap-4">
+                <div class="text-gray-500 text-sm">
+                    © 2024 Converter Tools. All rights reserved.
+                </div>
+                <div class="flex gap-6">
+                    <a href="/api/docs" target="_blank" class="text-gray-500 hover:text-primary-400 transition-colors text-sm">API Documentation</a>
+                    <a href="#" class="text-gray-500 hover:text-primary-400 transition-colors text-sm">Privacy Policy</a>
+                    <a href="#" class="text-gray-500 hover:text-primary-400 transition-colors text-sm">Terms of Service</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="js/main.js"></script>
+    
+    <!-- JSON-LD Structured Data for SEO -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "Converter Tools",
+        "description": "Free online converter tools for AI, Media, Finance, Developer, Utility, and Education",
+        "url": "https://converter-tools.netlify.app",
+        "applicationCategory": "Utility",
+        "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "USD"
+        }
+    }
+    </script>
+</body>
+</html>
